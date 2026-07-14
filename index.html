@@ -43,13 +43,12 @@
 
   /* ---------- top nav ---------- */
   .nav{
-    display:flex;
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
     align-items:center;
-    justify-content:space-between;
     padding:26px 40px;
     max-width:1180px;
     margin:0 auto;
-    flex-wrap:wrap;
     gap:16px;
   }
 
@@ -76,7 +75,7 @@
   }
   .nav__tabs a:hover:not(.active){ color:var(--ink); }
 
-  .nav__icons{ display:flex; gap:16px; align-items:center; }
+  .nav__icons{ display:flex; gap:16px; align-items:center; justify-self:end; }
   .nav__icons a{
     width:22px; height:22px;
     display:flex;
@@ -135,14 +134,27 @@
   /* ---------- project block ---------- */
   .project{ margin-bottom:80px; }
 
+  /* ---------- horizontal scroll strip ---------- */
   .browser-row{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
+    display:flex;
     gap:16px;
     margin-bottom:34px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    padding-bottom:12px;          /* room for the scrollbar */
+    scrollbar-width:thin;
+    scrollbar-color:var(--border) transparent;
   }
+  .browser-row::-webkit-scrollbar{ height:8px; }
+  .browser-row::-webkit-scrollbar-thumb{
+    background:var(--border);
+    border-radius:4px;
+  }
+  .browser-row::-webkit-scrollbar-thumb:hover{ background:var(--blue); }
 
   .browser{
+    flex:0 0 clamp(260px, 32%, 380px);   /* ~3 visible, rest scrolls */
+    scroll-snap-align:start;
     border:1px solid var(--border);
     border-radius:10px;
     overflow:hidden;
@@ -164,6 +176,18 @@
     overflow:hidden;
   }
   .browser__screen svg{ width:100%; height:100%; display:block; }
+  .browser__screen img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+  }
+  .browser__screen iframe{
+  width:100%;
+  height:100%;
+  display:block;
+  border:0;
+  }
 
   .project-title{
     font-size:clamp(22px, 3vw, 30px);
@@ -227,9 +251,9 @@
 
   /* ---------- responsive ---------- */
   @media (max-width: 900px){
-    .browser-row{ grid-template-columns:1fr; }
-    .nav{ justify-content:center; text-align:center; }
-    .nav__tabs{ order:3; width:100%; justify-content:center; flex-wrap:wrap; }
+    .browser{ flex:0 0 82%; }
+    .nav{ grid-template-columns:1fr; justify-items:center; text-align:center; }
+    .nav__icons{ justify-self:center; }
   }
 </style>
 </head>
@@ -242,18 +266,18 @@
   </svg>
 
   <ul class="nav__tabs">
-    <li><a href="#" class="active">Projects</a></li>
-    <li><a href="#">About</a></li>
-    <li><a href="#">Contact</a></li>
+    <li><a href="index.html" class="active">Projects</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
 
   <div class="nav__icons">
-    <a href="#" aria-label="Resume" title="Resume">
+    <a href="https://docs.google.com/document/d/16y4Zj-mHANSs0ESnYxBDdC98ToiqCWU_QVONGO_XxuY/edit?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Resume" title="Resume">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
         <path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/>
       </svg>
     </a>
-    <a href="https://github.com/jaheffrey" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+    <a href="https://github.com/Jeffreyyu0022" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 1.5A10.5 10.5 0 0 0 1.5 12c0 4.66 3.03 8.6 7.23 9.99.53.1.72-.23.72-.51 0-.25-.01-1.08-.02-1.96-2.94.64-3.56-1.25-3.56-1.25-.48-1.22-1.17-1.55-1.17-1.55-.96-.65.07-.64.07-.64 1.06.07 1.62 1.09 1.62 1.09.94 1.61 2.47 1.15 3.07.88.1-.68.37-1.15.67-1.42-2.35-.27-4.82-1.17-4.82-5.22 0-1.15.41-2.09 1.09-2.83-.11-.27-.47-1.36.1-2.83 0 0 .89-.28 2.92 1.08a10.1 10.1 0 0 1 5.32 0c2.03-1.36 2.92-1.08 2.92-1.08.57 1.47.21 2.56.1 2.83.68.74 1.09 1.68 1.09 2.83 0 4.06-2.48 4.95-4.84 5.21.38.33.72.97.72 1.96 0 1.42-.01 2.56-.01 2.91 0 .28.19.62.73.51A10.51 10.51 0 0 0 22.5 12 10.5 10.5 0 0 0 12 1.5z"/>
       </svg>
@@ -263,7 +287,7 @@
         <rect x="3" y="4" width="18" height="5" rx="1"/><path d="M5 9v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9M10 13h4"/>
       </svg>
     </a>
-    <a href="#" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+    <a href="https://www.linkedin.com/in/jeffreyyu16" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM3.2 8.75h3.5V21H3.2V8.75zM9.75 8.75h3.36v1.68h.05c.47-.87 1.6-1.79 3.3-1.79 3.53 0 4.18 2.32 4.18 5.35V21h-3.5v-6.37c0-1.52-.03-3.47-2.12-3.47-2.12 0-2.45 1.66-2.45 3.36V21h-3.5V8.75z"/>
       </svg>
@@ -277,11 +301,6 @@
     <h1 class="glitch">Projects</h1>
   </div>
 
-  <div class="subtabs">
-    <a href="#" class="active">Engine &amp; Tools</a>
-    <a href="#">Games</a>
-  </div>
-
   <!-- ===================== PROJECT 1 ===================== -->
   <div class="project">
     <div class="browser-row">
@@ -289,73 +308,58 @@
       <div class="browser">
         <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
         <div class="browser__screen">
-          <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
-            <rect width="300" height="200" fill="#12141c"/>
-            <rect x="12" y="12" width="70" height="176" fill="#1c2030"/>
-            <rect x="20" y="24" width="54" height="8" fill="#3b5fe0"/>
-            <rect x="20" y="40" width="54" height="6" fill="#2a2f42"/>
-            <rect x="20" y="54" width="40" height="6" fill="#2a2f42"/>
-            <rect x="20" y="80" width="54" height="34" fill="#2a2f42"/>
-            <rect x="20" y="120" width="54" height="34" fill="#2a2f42"/>
-            <rect x="92" y="12" width="196" height="176" fill="#0d0f16"/>
-            <circle cx="190" cy="100" r="46" fill="none" stroke="#3b5fe0" stroke-width="1.5" stroke-dasharray="4 3"/>
-            <rect x="160" y="70" width="60" height="60" fill="none" stroke="#ff3b3b" stroke-width="1.5"/>
-            <line x1="92" y1="100" x2="288" y2="100" stroke="#22263a" stroke-width="1"/>
-          </svg>
+          <img src="imgs/YTMT1.png" alt="Screenshot of Nelson the Squid at the beach in the morningfrom YTMT">
         </div>
       </div>
 
       <div class="browser">
         <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
         <div class="browser__screen">
-          <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
-            <rect width="300" height="200" fill="#12141c"/>
-            <rect x="0" y="0" width="300" height="26" fill="#1c2030"/>
-            <rect x="12" y="9" width="60" height="8" fill="#3b5fe0"/>
-            <rect x="12" y="40" width="120" height="70" fill="#1c2030"/>
-            <rect x="20" y="48" width="60" height="6" fill="#3b5fe0"/>
-            <rect x="20" y="60" width="100" height="6" fill="#2a2f42"/>
-            <rect x="20" y="72" width="90" height="6" fill="#2a2f42"/>
-            <rect x="20" y="84" width="70" height="6" fill="#2a2f42"/>
-            <rect x="150" y="40" width="138" height="140" fill="#0d0f16"/>
-            <path d="M160 150 L190 100 L215 130 L245 70 L275 110" fill="none" stroke="#00c2c2" stroke-width="2"/>
-          </svg>
+          <img src="imgs/YTMT4.png" alt="Screenshot of digging from YTMT">
         </div>
       </div>
 
       <div class="browser">
         <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
         <div class="browser__screen">
-          <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
-            <rect width="300" height="200" fill="#0d0f16"/>
-            <rect x="20" y="20" width="260" height="30" fill="#1c2030"/>
-            <rect x="30" y="30" width="100" height="10" fill="#ff3b3b"/>
-            <rect x="20" y="64" width="122" height="116" fill="#1c2030"/>
-            <rect x="152" y="64" width="128" height="116" fill="#1c2030"/>
-            <circle cx="81" cy="122" r="30" fill="none" stroke="#3b5fe0" stroke-width="2"/>
-            <rect x="182" y="92" width="68" height="60" fill="none" stroke="#00c2c2" stroke-width="2"/>
-          </svg>
+          <img src="imgs/YTMT2.png" alt="Screenshot of sortingfrom YTMT">
         </div>
       </div>
 
+      <div class="browser">
+        <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
+        <div class="browser__screen">
+          <img src="imgs/YTMT3.png" alt="Screenshot of Nelson the Squid at the beach at night from YTMT">
+        </div>
+      </div>
+
+      <div class="browser">
+        <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
+        <div class="browser__screen">
+          <img src="imgs/YTMT5.png" alt="Screenshot of the end of day summary from YTMT">
+        </div>
+      </div>
+      
     </div>
 
-    <h2 class="project-title">Custom Forward+ Renderer</h2>
+    <h2 class="project-title">Your Trash, My Treasure (2026)</h2>
     <p class="project-desc">
-      A rendering engine built from scratch over a semester to explore
-      clustered lighting, cascaded shadow maps, and a lightweight material
-      system. Includes an in-editor debug viewport for inspecting light
-      clusters and draw calls in real time. Built with C++ and Vulkan.
+      Dig up trash, beat the clock, and sort it right! Help Nelson the Squid clean up the beach
+      in this satisfying digging-and-sorting game powered by fast-paced quick-time events.
+      Fun for players of all ages, with a bit of environmental education mixed in. Built in 
+      Unity by a two-engineer team, with custom music and sound effects from our sound team at
+      Berklee College of Music.
     </p>
     <div class="tag-row">
-      <span class="pill">C++</span>
-      <span class="pill">Vulkan</span>
-      <span class="pill">GLSL</span>
-      <span class="pill">CMake</span>
-      <span class="pill">Real-time Rendering</span>
+      <span class="pill">Unity</span>
+      <span class="pill">C# Scripting</span>
+      <span class="pill">Perforce</span>
+      <span class="pill">Level Design</span>
+      <span class="pill">World Building</span>
+      <span class="pill">Story Building</span>
     </div>
-    <a class="live-link" href="#" target="_blank" rel="noopener">
-      Live Link
+    <a class="live-link" href="https://songjl.itch.io/ytmt" target="_blank" rel="noopener">
+      Play Here
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M7 17L17 7M7 7h10v10"/>
       </svg>
@@ -369,67 +373,229 @@
       <div class="browser">
         <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
         <div class="browser__screen">
-          <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
-            <rect width="300" height="200" fill="#12141c"/>
-            <rect x="0" y="0" width="300" height="200" fill="#0d0f16"/>
-            <rect x="24" y="24" width="48" height="48" fill="#2a2f42" stroke="#3b5fe0" stroke-width="1.5"/>
-            <rect x="90" y="60" width="48" height="48" fill="#2a2f42" stroke="#3b5fe0" stroke-width="1.5"/>
-            <rect x="156" y="24" width="48" height="48" fill="#2a2f42" stroke="#ff3b3b" stroke-width="1.5"/>
-            <rect x="222" y="90" width="48" height="48" fill="#2a2f42" stroke="#3b5fe0" stroke-width="1.5"/>
-            <rect x="90" y="140" width="48" height="48" fill="#2a2f42" stroke="#00c2c2" stroke-width="1.5"/>
-          </svg>
+          <img src="imgs/TS1.png" alt="Screenshot of the typing interface from Typing Smack">
         </div>
       </div>
 
       <div class="browser">
         <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
         <div class="browser__screen">
-          <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
-            <rect width="300" height="200" fill="#12141c"/>
-            <rect x="14" y="14" width="272" height="30" fill="#1c2030"/>
-            <rect x="24" y="24" width="120" height="10" fill="#3b5fe0"/>
-            <rect x="14" y="58" width="130" height="128" fill="#1c2030"/>
-            <rect x="24" y="70" width="110" height="8" fill="#2a2f42"/>
-            <rect x="24" y="86" width="90" height="8" fill="#2a2f42"/>
-            <rect x="24" y="102" width="100" height="8" fill="#2a2f42"/>
-            <rect x="156" y="58" width="130" height="128" fill="#0d0f16"/>
-            <path d="M170 170 L200 90 L220 140 L250 60 L276 100" fill="none" stroke="#ff3b3b" stroke-width="2"/>
-          </svg>
+          <img src="imgs/TS2.png" alt="Screenshot of the typing interface from Typing Smack">
         </div>
       </div>
 
       <div class="browser">
         <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
         <div class="browser__screen">
-          <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
-            <rect width="300" height="200" fill="#0d0f16"/>
-            <circle cx="150" cy="100" r="70" fill="none" stroke="#3b5fe0" stroke-width="1.5" stroke-dasharray="3 3"/>
-            <circle cx="150" cy="100" r="6" fill="#ff3b3b"/>
-            <circle cx="100" cy="70" r="4" fill="#00c2c2"/>
-            <circle cx="200" cy="130" r="4" fill="#00c2c2"/>
-            <line x1="150" y1="100" x2="100" y2="70" stroke="#2a2f42" stroke-width="1"/>
-            <line x1="150" y1="100" x2="200" y2="130" stroke="#2a2f42" stroke-width="1"/>
-          </svg>
+          <img src="imgs/TS3.png" alt="Screenshot of the game over screen from Typing Smack">
+        </div>
+      </div>
+
+      <div class="browser">
+        <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
+        <div class="browser__screen">
+          <img src="imgs/TS4.png" alt="Screenshot of the typing interface from Typing Smack">
         </div>
       </div>
 
     </div>
 
-    <h2 class="project-title">Procedural Dungeon Toolkit</h2>
+    <h2 class="project-title">Typing Smack (2025)</h2>
     <p class="project-desc">
-      An in-editor procedural level generation tool for Unity with tunable
-      room density, loop count, and difficulty curve. Includes a live
-      preview graph so designers can iterate without leaving the editor.
-      Built with C# and Unity's Editor scripting API.
+      Endless typing game where you talk smack to players, made with a team for Open Alpha USC x USC Keebies Ctrl+Alt+Create Game Jam.
+      Inspired by the moments just after winning a competitive game match. Features all original artwork and music.
     </p>
     <div class="tag-row">
       <span class="pill">Unity</span>
-      <span class="pill">C#</span>
-      <span class="pill">Editor Tooling</span>
-      <span class="pill">Procedural Generation</span>
+      <span class="pill">C# Scripting</span>
+      <span class="pill">Git</span>
+      <span class="pill">Random Level Generation</span>
     </div>
-    <a class="live-link" href="#" target="_blank" rel="noopener">
-      Live Link
+    <a class="live-link" href="https://songjl.itch.io/typing-smack" target="_blank" rel="noopener">
+      Play Here
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M7 17L17 7M7 7h10v10"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- ===================== PROJECT 3 ===================== -->
+  <div class="project">
+    <div class="browser-row">
+
+      <div class="browser">
+        <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
+        <div class="browser__screen">
+          <img src="imgs/OYB3.png" alt="Screenshot of Title Screen from Open Your Browser">
+        </div>
+      </div>
+
+      <div class="browser">
+        <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
+        <div class="browser__screen">
+          <img src="imgs/OYB4.png" alt="Screenshot of crashed system from Open Your Browser">
+        </div>
+      </div>
+
+      <div class="browser">
+        <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
+        <div class="browser__screen">
+          <img src="imgs/OYB2.png" alt="Screenshot fanfic from Open Your Browser">
+        </div>
+      </div>
+
+      <div class="browser">
+        <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
+        <div class="browser__screen">
+          <img src="imgs/OYB1.png" alt="Screenshot of homeless MC from Open Your Browser">
+        </div>
+      </div>
+
+      <div class="browser">
+        <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
+        <div class="browser__screen">
+          <img src="imgs/OYB5.png" alt="Screenshot accepting cookies from Open Your Browser">
+        </div>
+      </div>
+
+    </div>
+
+    <h2 class="project-title">Open Your Browser (2025)</h2>
+    <p class="project-desc">
+      You're an art student applying to colleges, but you accidentally submit fanfic in your portfolio.
+      You scramble to unsubmit before it's too late, and your computer crashes. Now you have to navigate
+      your own desktop with the help of Manny, your computer assistant, and take back that portfolio
+      before the deadline hits. An all-original humorous pixel-art game built over a semester with
+      Open Alpha USC, where I worked as a programming mentor. I implemented my assigned gameplay features
+      while teaching newer members how to program in Unity and C#.
+    </p>
+    <div class="tag-row">
+      <span class="pill">Unity</span>
+      <span class="pill">C# Scripting</span>
+      <span class="pill">Git</span>
+       <span class="pill">Level Design</span>
+      <span class="pill">Team Collaboration</span>
+      <span class="pill">Time Management</span>
+    </div>
+    <a class="live-link" href="https://open-alpha-usc.itch.io/open-your-browser" target="_blank" rel="noopener">
+      Play Here
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M7 17L17 7M7 7h10v10"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- ===================== PROJECT 4 ===================== -->
+  <div class="project">
+    <div class="browser-row">
+
+      <div class="browser">
+        <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
+        <div class="browser__screen">
+          <img src="imgs/ECU1.png" alt="Screenshot of Cantus Ex Umbrea game play">
+        </div>
+      </div>
+
+      <div class="browser">
+        <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
+        <div class="browser__screen">
+          <img src="imgs/ECU3.png" alt="Screenshot of Cantus Ex Umbrea game play">
+        </div>
+      </div>
+
+      <div class="browser">
+        <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
+        <div class="browser__screen">
+          <img src="imgs/ECU4.png" alt="Screenshot of Cantus Ex Umbrea game play">
+        </div>
+      </div>
+
+      <div class="browser">
+        <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
+        <div class="browser__screen">
+          <img src="imgs/ECU5.png" alt="Screenshot of Cantus Ex Umbrea game play">
+        </div>
+      </div>
+
+
+    </div>
+
+    <h2 class="project-title">Cantus Ex Umbrea (2024)</h2>
+    <p class="project-desc">
+      A two-player rhythm game set in a dark nightmare. One player on mouse, one on
+      keyboard. They must sync their timing to block attacks and land counterstrikes. 
+      With a high enough chain of perfects together they are able to trigger burst mode
+      where they can unleash a flurry of attacks by button mashing! Made in Unity with a friend. 
+      I was the main engineer, and implemented the rhythm engine, syncing the timing to the
+      pitch of the main song, while also keeping the build clean and bug-free for our weekly deliverables.
+    </p>
+    <div class="tag-row">
+      <span class="pill">Unity</span>
+      <span class="pill">C# Scripting</span>
+      <span class="pill">Perforce</span>
+      <span class="pill">Level Design</span>
+      <span class="pill">Team Collaboration</span>
+      <span class="pill">Time Management</span>
+    </div>
+    <a class="live-link" href="https://jaheffrey.itch.io/cantus-12243" target="_blank" rel="noopener">
+      Play Here
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M7 17L17 7M7 7h10v10"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- ===================== PROJECT 5 ===================== -->
+  <div class="project">
+    <div class="browser-row">
+
+      <div class="browser">
+        <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
+        <div class="browser__screen">
+          <img src="imgs/STP1.png" alt="Screenshot of title from Smooth-Talking Pickpocket">
+        </div>
+      </div>
+
+      <div class="browser">
+        <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
+        <div class="browser__screen">
+          <img src="imgs/STP2.png" alt="Screenshot of gamplay from Smooth-Talking Pickpocket">
+        </div>
+      </div>
+
+      <div class="browser">
+        <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
+          <div class="browser__screen">
+          <img src="imgs/STP3.png" alt="Screenshot of gamplay from Smooth-Talking Pickpocket">
+        </div>
+      </div>
+
+      <div class="browser">
+        <div class="browser__bar"><span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span></div>
+        <div class="browser__screen">
+          <img src="imgs/STP4.png" alt="Screenshot of gamplay from Smooth-Talking Pickpocket">
+        </div>
+      </div>
+
+    </div>
+
+    <h2 class="project-title">Smooth-Talking Pickpocket (2024)</h2>
+    <p class="project-desc">
+      A narrative pickpocketing game set in New London, where you have five days to steal your way to the
+      top before the gala. Talk your way through a cast of strange characters, make them trust you, and
+      pick everyone's pockets! However, if you get caught, Detective Gwydir puts you in jail. What you
+      steal along the way decides your ending. Made with Open Alpha USC over a semester. I worked as an 
+      engineer on the team, shipping my assigned features and keeping the build clean for our weekly deliverables.
+    </p>
+    <div class="tag-row">
+      <span class="pill">Unity</span>
+      <span class="pill">C# Scripting</span>
+      <span class="pill">Git</span>
+      <span class="pill">Level Design</span>
+      <span class="pill">Worldbuilding</span>
+    </div>
+    <a class="live-link" href="https://open-alpha-usc.itch.io/smooth-talking-pickpocket" target="_blank" rel="noopener">
+      Play Here
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M7 17L17 7M7 7h10v10"/>
       </svg>
@@ -438,7 +604,19 @@
 
 </div>
 
-<footer>© 2026 Jeffrey Yu — All right reserved </footer>
+<footer>© 2026 Jeffrey Yu — All rights reserved</footer>
+
+<!-- wheel-to-horizontal-scroll -->
+<script>
+document.querySelectorAll('.browser-row').forEach(row => {
+  row.addEventListener('wheel', e => {
+    if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;  // let trackpad swipes through
+    if (row.scrollWidth <= row.clientWidth) return;         // nothing to scroll
+    e.preventDefault();
+    row.scrollLeft += e.deltaY;
+  }, { passive: false });
+});
+</script>
 
 </body>
 </html>
